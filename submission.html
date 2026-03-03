@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投稿指南 - ICLR底会</title>
+    <!-- 引入相同的CSS资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#344054',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-secondary">
+    <!-- 导航栏 (同上，略) -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <i class="fa-solid fa-book-journal-whills text-2xl text-primary"></i>
+                    <span class="text-xl font-bold text-primary">ICLR底会</span>
+                </a>
+                <button id="mobile-menu-button" class="lg:hidden text-gray-500 hover:text-primary">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="index.html" class="hover:text-primary">首页</a>
+                    <a href="submission.html" class="text-primary font-medium">投稿指南</a>
+                    <a href="published.html" class="hover:text-primary">已发表论文</a>
+                    <a href="rejected.html" class="hover:text-primary">退稿案例</a>
+                    <a href="#" class="hover:text-primary">关于我们</a>
+                </nav>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100">
+            <div class="container mx-auto px-4 py-3 space-y-2">
+                <a href="index.html" class="block py-2 hover:text-primary">首页</a>
+                <a href="submission.html" class="block py-2 text-primary font-medium">投稿指南</a>
+                <a href="published.html" class="block py-2 hover:text-primary">已发表论文</a>
+                <a href="rejected.html" class="block py-2 hover:text-primary">退稿案例</a>
+                <a href="#" class="block py-2 hover:text-primary">关于我们</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm p-8 md:p-10">
+            <h1 class="text-3xl font-bold mb-6 text-center border-b pb-4">投稿须知</h1>
+            
+            <div class="prose max-w-none">
+                <h2 class="text-2xl font-semibold text-primary mt-8 mb-4">一、 投稿方式</h2>
+                <p>本刊仅接受 <strong>在线投稿</strong>。请作者将论文电子版发送至编辑部邮箱：<a href="mailto:journal@xxu.edu.cn" class="text-primary">iclrpaper@163.com</a>。</p>
+                <p>邮件主题请注明：<strong>“投稿-第一作者姓名-论文题目”</strong>。</p>
+
+                <h2 class="text-2xl font-semibold text-primary mt-8 mb-4">二、 稿件要求</h2>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>论文需具有原创性，未在任何公开出版物上发表过。</li>
+                    <li>来稿请附中英文题目、作者姓名、单位、摘要（200字左右）及关键词（3-5个）。</li>
+                    <li>基金项目资助论文请注明项目名称及编号。</li>
+                </ul>
+
+                <h2 class="text-2xl font-semibold text-primary mt-8 mb-4">三、 审稿周期</h2>
+                <p>编辑部收到稿件后，将在5-10个工作日在小红书账号：人工智能底会ICLR  发起公开评审。</p>
+
+                <div class="bg-primary/10 border-l-4 border-primary p-4 my-8">
+                    <p class="font-semibold">重要提示：</p>
+                    <p>。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-secondary text-white pt-12 pb-8 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-gray-400 pt-8 border-t border-white/20">
+                <p>© 2025 ICLR底会 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
