@@ -30,6 +30,12 @@
             .btn-shadow {
                 box-shadow: 0 4px 12px rgba(22, 93, 255, 0.35);
             }
+            /* 保证二维码图片原始比例，不被拉伸压缩 */
+            .qrcode-img {
+                object-fit: contain;
+                max-width: 100%;
+                height: auto !important;
+            }
         }
     </style>
 </head>
@@ -68,53 +74,54 @@
     <!-- 联系我们核心内容 -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-5xl mx-auto">
                 <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-secondary text-center mb-12">联系我们</h2>
                 
-                <!-- 联系方式网格布局 -->
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <!-- 公众号二维码 -->
-                    <div class="bg-gray-50 rounded-xl p-8 text-center">
+                <!-- 优化布局：移动端单列，平板/桌面端自适应 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- 公众号二维码 - 单独占一列 -->
+                    <div class="bg-gray-50 rounded-xl p-8 text-center flex flex-col items-center justify-center">
                         <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fa-brands fa-weixin text-3xl text-primary"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-4">官方公众号</h3>
-                        <!-- 替换成你的公众号二维码图片地址 -->
-                        <img src="https://iclrpaper.github.io/iclrpaper/images/gongzhong.png" alt="公众号二维码" class="w-48 h-48 mx-auto border border-gray-200 rounded-lg mb-4">
-                        <p class="text-gray-600">扫码关注，获取最新征稿、审稿资讯</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 rounded-xl p-8 text-center">
-                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fa-brands fa-weixin text-3xl text-primary"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-4">官方小红书</h3>
-                        <!-- 替换成你的公众号二维码图片地址 -->
-                        <img src="https://iclrpaper.github.io/iclrpaper/images/rednote.png" alt="公众号二维码" class="w-48 h-48 mx-auto border border-gray-200 rounded-lg mb-4">
-                        <p class="text-gray-600">扫码关注，获取最新征稿、审稿资讯</p>
+                        <!-- 关键修改：使用qrcode-img类保证原始比例，取消固定高度 -->
+                        <img src="https://iclrpaper.github.io/iclrpaper/images/gongzhong.png" alt="公众号二维码" class="qrcode-img max-w-[200px] mx-auto border border-gray-200 rounded-lg mb-4">
+                        <p class="text-gray-600 text-sm">扫码关注，获取最新征稿、审稿资讯</p>
                     </div>
 
-                    <!-- 其他联系方式 -->
-                    <div class="bg-gray-50 rounded-xl p-8">
+                    <!-- 小红书二维码 - 单独占一列 -->
+                    <div class="bg-gray-50 rounded-xl p-8 text-center flex flex-col items-center justify-center">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-book-open text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">官方小红书</h3>
+                        <!-- 关键修改：使用qrcode-img类保证原始比例，取消固定高度 -->
+                        <img src="https://iclrpaper.github.io/iclrpaper/images/rednote.png" alt="小红书二维码" class="qrcode-img max-w-[200px] mx-auto border border-gray-200 rounded-lg mb-4">
+                        <p class="text-gray-600 text-sm">扫码关注，获取最新征稿、审稿资讯</p>
+                    </div>
+
+                    <!-- 其他联系方式 - 占一列，垂直居中 -->
+                    <div class="bg-gray-50 rounded-xl p-8 flex flex-col justify-center">
                         <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fa-solid fa-address-book text-3xl text-primary"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-6 text-center">其他联系方式</h3>
                         <ul class="space-y-4">
                             <li class="flex items-center">
-                                <i class="fa-solid fa-envelope text-primary text-xl w-8"></i>
+                                <i class="fa-solid fa-envelope text-primary text-xl w-8 text-center"></i>
                                 <span class="ml-3">iclrpaper@163.com</span>
                             </li>
                             <li class="flex items-center">
-                                <i class="fa-solid fa-phone text-primary text-xl w-8"></i>
+                                <i class="fa-solid fa-phone text-primary text-xl w-8 text-center"></i>
                                 <span class="ml-3">000-12345678</span>
                             </li>
                             <li class="flex items-center">
-                                <i class="fa-solid fa-location-dot text-primary text-xl w-8"></i>
+                                <i class="fa-solid fa-location-dot text-primary text-xl w-8 text-center"></i>
                                 <span class="ml-3">Wild Chicken University</span>
                             </li>
                             <li class="flex items-center">
-                                <i class="fa-brands fa-github text-primary text-xl w-8"></i>
+                                <i class="fa-brands fa-github text-primary text-xl w-8 text-center"></i>
                                 <span class="ml-3"><a href="https://github.com/iclrpaper" class="text-primary hover:underline">GitHub仓库</a></span>
                             </li>
                         </ul>
