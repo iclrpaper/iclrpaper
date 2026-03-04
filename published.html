@@ -14,6 +14,7 @@
                     colors: {
                         primary: '#165DFF',
                         secondary: '#344054',
+                        like: '#ff4d6d', // 点赞爱心颜色
                     },
                 }
             }
@@ -58,32 +59,44 @@
             <!-- 页面标题 -->
             <div class="mb-10 border-b border-gray-200 pb-4">
                 <h1 class="text-3xl font-bold mb-2">已发表论文</h1>
-                <!-- 这里的数字会被JS自动替换 -->
                 <p class="text-gray-500">共收录 <span id="paper-count" class="font-semibold text-primary">0</span> 篇学术论文，点击标题下方链接可下载PDF全文。</p>
+                <!-- 新增：总点赞数显示 -->
+                <p class="text-gray-500 mt-2">总点赞数：<span id="total-like-count" class="font-semibold text-like">0</span></p>
             </div>
 
             <!-- 论文列表 (给容器加id，方便JS获取) -->
             <div id="paper-list" class="space-y-6">
-                <!-- 论文项 1 -->
-                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                <!-- 论文项 1 (新增点赞功能) -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow" data-paper-id="paper1">
                     <h2 class="text-xl font-semibold mb-2">title1</h2>
                     <p class="text-gray-600 mb-4">作者：张三, 李四, 王五 | 单位：XX大学文学院</p>
-                    <div class="flex items-center">
+                    <div class="flex items-center justify-between">
                         <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
                             <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
                             下载PDF全文
                         </a>
+                        <!-- 点赞按钮 -->
+                        <div class="like-button flex items-center space-x-2 cursor-pointer" data-paper-id="paper1">
+                            <i class="fa-solid fa-heart text-xl text-gray-400 hover:text-like transition-colors like-icon"></i>
+                            <span class="like-count text-gray-600">0</span>
+                        </div>
                     </div>
                 </div>
-                <!-- 可以继续添加更多论文项，数量会自动统计 -->
-                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+
+                <!-- 论文项 2 (新增点赞功能) -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow" data-paper-id="paper2">
                     <h2 class="text-xl font-semibold mb-2">title2</h2>
                     <p class="text-gray-600 mb-4">作者：赵六, 钱七 | 单位：XX研究院</p>
-                    <div class="flex items-center">
+                    <div class="flex items-center justify-between">
                         <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
                             <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
                             下载PDF全文
                         </a>
+                        <!-- 点赞按钮 -->
+                        <div class="like-button flex items-center space-x-2 cursor-pointer" data-paper-id="paper2">
+                            <i class="fa-solid fa-heart text-xl text-gray-400 hover:text-like transition-colors like-icon"></i>
+                            <span class="like-count text-gray-600">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,17 +120,90 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // 自动统计论文数量并更新显示
+        // 1. 自动统计论文数量并更新显示
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. 获取论文列表容器
+            // 统计论文数量
             const paperList = document.getElementById('paper-list');
-            // 2. 获取所有论文项（筛选出带论文卡片样式的子元素）
             const paperItems = paperList.querySelectorAll('.bg-white.rounded-lg.p-6.shadow-sm');
-            // 3. 获取显示数量的元素
             const paperCountElement = document.getElementById('paper-count');
-            // 4. 更新数量显示
             paperCountElement.textContent = paperItems.length;
+
+            // 2. 点赞功能核心逻辑
+            initLikeFunction();
+            // 3. 计算并显示总点赞数
+            updateTotalLikeCount();
         });
+
+        // 初始化点赞功能
+        function initLikeFunction() {
+            // 获取所有点赞按钮
+            const likeButtons = document.querySelectorAll('.like-button');
+            
+            // 从本地存储加载点赞数据（刷新页面不丢失）
+            const likeData = JSON.parse(localStorage.getItem('paperLikes')) || {};
+            
+            // 初始化每篇论文的点赞数和状态
+            likeButtons.forEach(button => {
+                const paperId = button.getAttribute('data-paper-id');
+                const likeCountEl = button.querySelector('.like-count');
+                const likeIconEl = button.querySelector('.like-icon');
+                
+                // 设置初始点赞数
+                likeCountEl.textContent = likeData[paperId]?.count || 0;
+                // 设置初始点赞状态（已点赞则红心）
+                if (likeData[paperId]?.liked) {
+                    likeIconEl.classList.remove('text-gray-400');
+                    likeIconEl.classList.add('text-like');
+                }
+
+                // 点击点赞按钮事件
+                button.addEventListener('click', () => {
+                    // 获取当前论文ID和数据
+                    const currentPaperId = button.getAttribute('data-paper-id');
+                    const currentCount = parseInt(likeCountEl.textContent);
+                    const isLiked = likeIconEl.classList.contains('text-like');
+
+                    if (isLiked) {
+                        // 取消点赞：数量-1，图标变灰
+                        likeCountEl.textContent = currentCount - 1;
+                        likeIconEl.classList.remove('text-like');
+                        likeIconEl.classList.add('text-gray-400');
+                        likeData[currentPaperId] = {
+                            count: currentCount - 1,
+                            liked: false
+                        };
+                    } else {
+                        // 点赞：数量+1，图标变红
+                        likeCountEl.textContent = currentCount + 1;
+                        likeIconEl.classList.remove('text-gray-400');
+                        likeIconEl.classList.add('text-like');
+                        likeData[currentPaperId] = {
+                            count: currentCount + 1,
+                            liked: true
+                        };
+                    }
+
+                    // 保存到本地存储
+                    localStorage.setItem('paperLikes', JSON.stringify(likeData));
+                    // 更新总点赞数
+                    updateTotalLikeCount();
+                });
+            });
+        }
+
+        // 计算并更新总点赞数
+        function updateTotalLikeCount() {
+            const likeData = JSON.parse(localStorage.getItem('paperLikes')) || {};
+            let total = 0;
+            
+            // 遍历所有论文的点赞数求和
+            Object.keys(likeData).forEach(paperId => {
+                total += likeData[paperId]?.count || 0;
+            });
+            
+            // 显示总点赞数
+            document.getElementById('total-like-count').textContent = total;
+        }
     </script>
 </body>
 </html>
