@@ -58,15 +58,27 @@
             <!-- 页面标题 -->
             <div class="mb-10 border-b border-gray-200 pb-4">
                 <h1 class="text-3xl font-bold mb-2">已发表论文</h1>
-                <p class="text-gray-500">共收录 <span class="font-semibold text-primary">6</span> 篇学术论文，点击标题下方链接可下载PDF全文。</p>
+                <!-- 这里的数字会被JS自动替换 -->
+                <p class="text-gray-500">共收录 <span id="paper-count" class="font-semibold text-primary">0</span> 篇学术论文，点击标题下方链接可下载PDF全文。</p>
             </div>
 
-            <!-- 论文列表 -->
-            <div class="space-y-6">
+            <!-- 论文列表 (给容器加id，方便JS获取) -->
+            <div id="paper-list" class="space-y-6">
                 <!-- 论文项 1 -->
                 <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
                     <h2 class="text-xl font-semibold mb-2">title1</h2>
                     <p class="text-gray-600 mb-4">作者：张三, 李四, 王五 | 单位：XX大学文学院</p>
+                    <div class="flex items-center">
+                        <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
+                            <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
+                            下载PDF全文
+                        </a>
+                    </div>
+                </div>
+                <!-- 可以继续添加更多论文项，数量会自动统计 -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <h2 class="text-xl font-semibold mb-2">title2</h2>
+                    <p class="text-gray-600 mb-4">作者：赵六, 钱七 | 单位：XX研究院</p>
                     <div class="flex items-center">
                         <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
                             <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
@@ -93,6 +105,18 @@
         const mobileMenu = document.getElementById('mobile-menu');
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+        });
+
+        // 自动统计论文数量并更新显示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 获取论文列表容器
+            const paperList = document.getElementById('paper-list');
+            // 2. 获取所有论文项（筛选出带论文卡片样式的子元素）
+            const paperItems = paperList.querySelectorAll('.bg-white.rounded-lg.p-6.shadow-sm');
+            // 3. 获取显示数量的元素
+            const paperCountElement = document.getElementById('paper-count');
+            // 4. 更新数量显示
+            paperCountElement.textContent = paperItems.length;
         });
     </script>
 </body>
