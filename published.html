@@ -84,6 +84,21 @@
                 </div>
 
                 <!-- 论文项 2 (新增点赞功能) -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow" data-paper-id="paper2">
+                    <h2 class="text-xl font-semibold mb-2">title2</h2>
+                    <p class="text-gray-600 mb-4">作者：赵六, 钱七 | 单位：XX研究院</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
+                            <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
+                            下载PDF全文
+                        </a>
+                        <!-- 点赞按钮 -->
+                        <div class="like-button flex items-center space-x-2 cursor-pointer" data-paper-id="paper2">
+                            <i class="fa-solid fa-heart text-xl text-gray-400 hover:text-like transition-colors like-icon"></i>
+                            <span class="like-count text-gray-600">0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -119,13 +134,15 @@
             updateTotalLikeCount();
         });
 
-        // 初始化点赞功能
+        // 初始化点赞功能（改为全局累加+单用户防重复）
         function initLikeFunction() {
             // 获取所有点赞按钮
             const likeButtons = document.querySelectorAll('.like-button');
             
-            // 从本地存储加载点赞数据（刷新页面不丢失）
-            const likeData = JSON.parse(localStorage.getItem('paperLikes')) || {};
+            // 1. 全局点赞数（所有用户共享，存在localStorage）
+            let globalLikeData = JSON.parse(localStorage.getItem('globalPaperLikes')) || {};
+            // 2. 单用户点赞记录（仅标记当前用户是否点过，防止重复累加）
+            let userLikedRecord = JSON.parse(localStorage.getItem('userLikedPapers')) || {};
             
             // 初始化每篇论文的点赞数和状态
             likeButtons.forEach(button => {
@@ -133,57 +150,51 @@
                 const likeCountEl = button.querySelector('.like-count');
                 const likeIconEl = button.querySelector('.like-icon');
                 
-                // 设置初始点赞数
-                likeCountEl.textContent = likeData[paperId]?.count || 0;
-                // 设置初始点赞状态（已点赞则红心）
-                if (likeData[paperId]?.liked) {
+                // 设置初始点赞数（全局累加的总数）
+                likeCountEl.textContent = globalLikeData[paperId] || 0;
+                // 设置初始点赞状态（当前用户是否点过）
+                if (userLikedRecord[paperId]) {
                     likeIconEl.classList.remove('text-gray-400');
                     likeIconEl.classList.add('text-like');
                 }
 
-                // 点击点赞按钮事件
+                // 点击点赞按钮事件（改为纯累加，取消“取消点赞”）
                 button.addEventListener('click', () => {
-                    // 获取当前论文ID和数据
                     const currentPaperId = button.getAttribute('data-paper-id');
-                    const currentCount = parseInt(likeCountEl.textContent);
-                    const isLiked = likeIconEl.classList.contains('text-like');
-
-                    if (isLiked) {
-                        // 取消点赞：数量-1，图标变灰
-                        likeCountEl.textContent = currentCount - 1;
-                        likeIconEl.classList.remove('text-like');
-                        likeIconEl.classList.add('text-gray-400');
-                        likeData[currentPaperId] = {
-                            count: currentCount - 1,
-                            liked: false
-                        };
-                    } else {
-                        // 点赞：数量+1，图标变红
-                        likeCountEl.textContent = currentCount + 1;
-                        likeIconEl.classList.remove('text-gray-400');
-                        likeIconEl.classList.add('text-like');
-                        likeData[currentPaperId] = {
-                            count: currentCount + 1,
-                            liked: true
-                        };
+                    
+                    // 检查当前用户是否已点赞，防止重复累加
+                    if (userLikedRecord[currentPaperId]) {
+                        return; // 已点赞则直接返回，不做任何操作
                     }
 
-                    // 保存到本地存储
-                    localStorage.setItem('paperLikes', JSON.stringify(likeData));
-                    // 更新总点赞数
+                    // 1. 全局点赞数+1
+                    const currentGlobalCount = globalLikeData[currentPaperId] || 0;
+                    globalLikeData[currentPaperId] = currentGlobalCount + 1;
+                    likeCountEl.textContent = globalLikeData[currentPaperId];
+                    
+                    // 2. 标记当前用户已点赞（红心显示）
+                    likeIconEl.classList.remove('text-gray-400');
+                    likeIconEl.classList.add('text-like');
+                    userLikedRecord[currentPaperId] = true;
+                    
+                    // 3. 保存数据到本地存储
+                    localStorage.setItem('globalPaperLikes', JSON.stringify(globalLikeData));
+                    localStorage.setItem('userLikedPapers', JSON.stringify(userLikedRecord));
+                    
+                    // 4. 更新总点赞数
                     updateTotalLikeCount();
                 });
             });
         }
 
-        // 计算并更新总点赞数
+        // 计算并更新总点赞数（基于全局累加数据）
         function updateTotalLikeCount() {
-            const likeData = JSON.parse(localStorage.getItem('paperLikes')) || {};
+            const globalLikeData = JSON.parse(localStorage.getItem('globalPaperLikes')) || {};
             let total = 0;
             
-            // 遍历所有论文的点赞数求和
-            Object.keys(likeData).forEach(paperId => {
-                total += likeData[paperId]?.count || 0;
+            // 遍历所有论文的全局点赞数求和
+            Object.keys(globalLikeData).forEach(paperId => {
+                total += globalLikeData[paperId] || 0;
             });
             
             // 显示总点赞数
