@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>拒稿论文</title>
+    <title>退稿案例</title>
     <!-- 引入与首页相同的CSS资源 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -14,6 +14,7 @@
                     colors: {
                         primary: '#165DFF',
                         secondary: '#344054',
+                        dislike: '#f59e0b', // 点踩颜色（橙黄色）
                     },
                 }
             }
@@ -21,7 +22,7 @@
     </script>
 </head>
 <body class="bg-gray-50 text-secondary">
-    <!-- 导航栏 (与首页一致) -->
+    <!-- 导航栏 (与已发表论文页面一致) -->
     <header class="sticky top-0 z-50 bg-white shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -35,8 +36,8 @@
                 <nav class="hidden lg:flex space-x-8">
                     <a href="index.html" class="hover:text-primary transition-colors">首页</a>
                     <a href="submission.html" class="hover:text-primary transition-colors">投稿指南</a>
-                    <a href="published.html" class="text-primary font-medium">已发表论文</a>
-                    <a href="rejected.html" class="hover:text-primary transition-colors">退稿案例</a>
+                    <a href="published.html" class="hover:text-primary transition-colors">已发表论文</a>
+                    <a href="rejected.html" class="text-primary font-medium">退稿案例</a>
                     <a href="contact.html" class="hover:text-primary transition-colors">联系我们</a>
                 </nav>
             </div>
@@ -45,8 +46,8 @@
             <div class="container mx-auto px-4 py-3 space-y-2">
                 <a href="index.html" class="block py-2 hover:text-primary">首页</a>
                 <a href="submission.html" class="block py-2 hover:text-primary">投稿指南</a>
-                <a href="published.html" class="block py-2 text-primary font-medium">已发表论文</a>
-                <a href="rejected.html" class="block py-2 hover:text-primary">退稿案例</a>
+                <a href="published.html" class="block py-2 hover:text-primary">已发表论文</a>
+                <a href="rejected.html" class="block py-2 text-primary font-medium">退稿案例</a>
                 <a href="contact.html" class="block py-2 hover:text-primary">联系我们</a>
             </div>
         </div>
@@ -57,28 +58,52 @@
         <div class="max-w-4xl mx-auto">
             <!-- 页面标题 -->
             <div class="mb-10 border-b border-gray-200 pb-4">
-                <h1 class="text-3xl font-bold mb-2">拒稿论文</h1>
-                <p class="text-gray-500">共拒稿 <span class="font-semibold text-primary">0</span> 篇学术论文，点击标题下方链接可下载PDF全文。</p>
+                <h1 class="text-3xl font-bold mb-2">退稿案例</h1>
+                <p class="text-gray-500">共收录 <span id="reject-count" class="font-semibold text-primary">0</span> 篇退稿案例，供作者参考改进。</p>
+                <!-- 新增：总点踩数显示 -->
+                <p class="text-gray-500 mt-2">总点踩数：<span id="total-dislike-count" class="font-semibold text-dislike">0</span></p>
             </div>
 
-            <!-- 论文列表 -->
-            <div class="space-y-6">
-                <!-- 论文项 1 -->
-                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                    <h2 class="text-xl font-semibold mb-2">title1</h2>
-                    <p class="text-gray-600 mb-4">作者：张三, 李四, 王五 | 单位：XX大学文学院</p>
-                    <div class="flex items-center">
+            <!-- 退稿案例列表 (给容器加id，方便JS获取) -->
+            <div id="reject-list" class="space-y-6">
+                <!-- 退稿案例项 1 (新增点踩功能) -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow" data-reject-id="reject1">
+                    <h2 class="text-xl font-semibold mb-2">退稿案例1</h2>
+                    <p class="text-gray-600 mb-4">作者：孙八 | 单位：XX理工大学 | 退稿原因：研究内容无创新</p>
+                    <div class="flex items-center justify-between">
                         <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
                             <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
-                            下载PDF全文
+                            查看完整退稿意见
                         </a>
+                        <!-- 点踩按钮 -->
+                        <div class="dislike-button flex items-center space-x-2 cursor-pointer" data-reject-id="reject1">
+                            <i class="fa-solid fa-thumbs-down text-xl text-gray-400 hover:text-dislike transition-colors dislike-icon"></i>
+                            <span class="dislike-count text-gray-600">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 退稿案例项 2 (新增点踩功能) -->
+                <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow" data-reject-id="reject2">
+                    <h2 class="text-xl font-semibold mb-2">退稿案例2</h2>
+                    <p class="text-gray-600 mb-4">作者：周九 | 单位：XX师范大学 | 退稿原因：实验数据造假</p>
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="flex items-center text-primary hover:text-primary/80 font-medium">
+                            <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i>
+                            查看完整退稿意见
+                        </a>
+                        <!-- 点踩按钮 -->
+                        <div class="dislike-button flex items-center space-x-2 cursor-pointer" data-reject-id="reject2">
+                            <i class="fa-solid fa-thumbs-down text-xl text-gray-400 hover:text-dislike transition-colors dislike-icon"></i>
+                            <span class="dislike-count text-gray-600">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 页脚 (与首页一致) -->
+    <!-- 页脚 (与已发表论文页面一致) -->
     <footer class="bg-secondary text-white pt-12 pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center text-gray-400 pt-8 border-t border-white/20">
@@ -94,6 +119,91 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+
+        // 1. 自动统计退稿案例数量并更新显示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 统计退稿案例数量
+            const rejectList = document.getElementById('reject-list');
+            const rejectItems = rejectList.querySelectorAll('.bg-white.rounded-lg.p-6.shadow-sm');
+            const rejectCountElement = document.getElementById('reject-count');
+            rejectCountElement.textContent = rejectItems.length;
+
+            // 2. 点踩功能核心逻辑
+            initDislikeFunction();
+            // 3. 计算并显示总点踩数
+            updateTotalDislikeCount();
+        });
+
+        // 初始化点踩功能
+        function initDislikeFunction() {
+            // 获取所有点踩按钮
+            const dislikeButtons = document.querySelectorAll('.dislike-button');
+            
+            // 从本地存储加载点踩数据（刷新页面不丢失）
+            const dislikeData = JSON.parse(localStorage.getItem('rejectDislikes')) || {};
+            
+            // 初始化每个退稿案例的点踩数和状态
+            dislikeButtons.forEach(button => {
+                const rejectId = button.getAttribute('data-reject-id');
+                const dislikeCountEl = button.querySelector('.dislike-count');
+                const dislikeIconEl = button.querySelector('.dislike-icon');
+                
+                // 设置初始点踩数
+                dislikeCountEl.textContent = dislikeData[rejectId]?.count || 0;
+                // 设置初始点踩状态（已点踩则橙黄色）
+                if (dislikeData[rejectId]?.disliked) {
+                    dislikeIconEl.classList.remove('text-gray-400');
+                    dislikeIconEl.classList.add('text-dislike');
+                }
+
+                // 点击点踩按钮事件
+                button.addEventListener('click', () => {
+                    // 获取当前案例ID和数据
+                    const currentRejectId = button.getAttribute('data-reject-id');
+                    const currentCount = parseInt(dislikeCountEl.textContent);
+                    const isDisliked = dislikeIconEl.classList.contains('text-dislike');
+
+                    if (isDisliked) {
+                        // 取消点踩：数量-1，图标变灰
+                        dislikeCountEl.textContent = currentCount - 1;
+                        dislikeIconEl.classList.remove('text-dislike');
+                        dislikeIconEl.classList.add('text-gray-400');
+                        dislikeData[currentRejectId] = {
+                            count: currentCount - 1,
+                            disliked: false
+                        };
+                    } else {
+                        // 点踩：数量+1，图标变橙黄
+                        dislikeCountEl.textContent = currentCount + 1;
+                        dislikeIconEl.classList.remove('text-gray-400');
+                        dislikeIconEl.classList.add('text-dislike');
+                        dislikeData[currentRejectId] = {
+                            count: currentCount + 1,
+                            disliked: true
+                        };
+                    }
+
+                    // 保存到本地存储
+                    localStorage.setItem('rejectDislikes', JSON.stringify(dislikeData));
+                    // 更新总点踩数
+                    updateTotalDislikeCount();
+                });
+            });
+        }
+
+        // 计算并更新总点踩数
+        function updateTotalDislikeCount() {
+            const dislikeData = JSON.parse(localStorage.getItem('rejectDislikes')) || {};
+            let total = 0;
+            
+            // 遍历所有案例的点踩数求和
+            Object.keys(dislikeData).forEach(rejectId => {
+                total += dislikeData[rejectId]?.count || 0;
+            });
+            
+            // 显示总点踩数
+            document.getElementById('total-dislike-count').textContent = total;
+        }
     </script>
 </body>
 </html>
