@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - ICLR: International Conference of Laughable Rubbish</title>
+    <!-- 复用首页的样式库，保证风格统一 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#344054',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .btn-shadow {
+                box-shadow: 0 4px 12px rgba(22, 93, 255, 0.35);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-secondary">
+    <!-- 复用首页导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <img src="https://iclrpaper.github.io/iclrpaper/images/logo.png" alt="我的logo" class="logo" width="50">
+                    <span class="text-xl font-bold text-primary">ICLR: International Conference of Laughable Rubbish</span>
+                </a>
+                <button id="mobile-menu-button" class="lg:hidden text-gray-500 hover:text-primary">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="index.html" class="hover:text-primary transition-colors">首页</a>
+                    <a href="submission.html" class="hover:text-primary transition-colors">投稿指南</a>
+                    <a href="published.html" class="hover:text-primary transition-colors">已发表论文</a>
+                    <a href="rejected.html" class="hover:text-primary transition-colors">退稿案例</a>
+                    <a href="contact.html" class="text-primary font-medium">联系我们</a>
+                </nav>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100">
+            <div class="container mx-auto px-4 py-3 space-y-2">
+                <a href="index.html" class="block py-2 hover:text-primary transition-colors">首页</a>
+                <a href="submission.html" class="block py-2 hover:text-primary transition-colors">投稿指南</a>
+                <a href="published.html" class="block py-2 hover:text-primary transition-colors">已发表论文</a>
+                <a href="rejected.html" class="block py-2 hover:text-primary transition-colors">退稿案例</a>
+                <a href="contact.html" class="block py-2 text-primary font-medium">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 联系我们核心内容 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-secondary text-center mb-12">联系我们</h2>
+                
+                <!-- 联系方式网格布局 -->
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <!-- 公众号二维码 -->
+                    <div class="bg-gray-50 rounded-xl p-8 text-center">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-brands fa-weixin text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">官方公众号</h3>
+                        <!-- 替换成你的公众号二维码图片地址 -->
+                        <img src="#" alt="公众号二维码" class="w-48 h-48 mx-auto border border-gray-200 rounded-lg mb-4">
+                        <p class="text-gray-600">扫码关注，获取最新征稿、审稿资讯</p>
+                    </div>
+
+                    <!-- 其他联系方式 -->
+                    <div class="bg-gray-50 rounded-xl p-8">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-address-book text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-6 text-center">其他联系方式</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-envelope text-primary text-xl w-8"></i>
+                                <span class="ml-3">iclrpaper@163.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-phone text-primary text-xl w-8"></i>
+                                <span class="ml-3">000-12345678</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-solid fa-location-dot text-primary text-xl w-8"></i>
+                                <span class="ml-3">Wild Chicken University</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa-brands fa-github text-primary text-xl w-8"></i>
+                                <span class="ml-3"><a href="#" class="text-primary hover:underline">GitHub仓库</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 复用首页页脚 -->
+    <footer class="bg-secondary text-white pt-12 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">ICLR底会</h4>
+                    <p class="text-gray-300">地址：Wild Chicken University</p>
+                    <p class="text-gray-300">电话：000-12345678</p>
+                    <p class="text-gray-300">邮箱：iclrpaper@163.com</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">收录情况</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="https://webofnothing.org/journal/International%20Conference%20of%20Laughable%20Rubbish.html" class="hover:text-white">Web of Nothing</a></li>
+                        <li><a href="https://scholar.google.com/" class="hover:text-white">谷歌学术</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">关注我们</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa-brands fa-weixin text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa-brands fa-weibo text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa-brands fa-github text-white"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-300">同名小红书，公众号，获取ICLR最新资讯</p>
+                </div>
+            </div>
+            <div class="border-t border-white/20 pt-8 mt-8 text-center text-gray-400">
+                <p>© 2025 ICLR底会编辑部 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 复用移动端菜单JS -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
