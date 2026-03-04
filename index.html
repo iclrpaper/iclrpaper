@@ -42,7 +42,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- 期刊LOGO与名称 -->
                 <a href="index.html" class="flex items-center space-x-3">
-                    <img src="https://iclrpaper.github.io/iclrpaper/images/logo.png" alt="我的logo" class="logo" width="50">
+                    <img src="https://iclrpaper.github.io/iclrpaper/images/logo.png" alt="我的logo" class="logo" width="60">
                     <span class="text-xl font-bold text-primary">ICLR: International Conference of Laughable Rubbish</span>
                 </a>
 
@@ -98,58 +98,68 @@
     </section>
 
     <!-- 核心功能区 -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- 功能卡片 1: 投稿 -->
-                <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+<section class="py-16 bg-white overflow-x-auto">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 使用flex布局实现一行排列，移动端可横向滚动 -->
+        <div class="flex gap-6 justify-start items-stretch min-w-max">
+            <!-- 功能卡片 1: 投稿 -->
+            <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow w-72 flex flex-col justify-between">
+                <div>
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fa-solid fa-file-pen text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">在线投稿</h3>
                     <p class="text-gray-600 mb-6">首创三明评审，全程openreview。</p>
-                    <a href="submission.html" class="text-primary font-medium inline-flex items-center">
-                        查看投稿须知 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                    </a>
                 </div>
+                <a href="submission.html" class="text-primary font-medium inline-flex items-center justify-center">
+                    查看投稿须知 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
 
-                <!-- 功能卡片 2: 已发表 -->
-                <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+            <!-- 功能卡片 2: 已发表 -->
+            <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow w-72 flex flex-col justify-between">
+                <div>
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fa-solid fa-check-double text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">已发表论文</h3>
                     <p class="text-gray-600 mb-6">收录历年发表的高质量学术论文。</p>
-                    <a href="published.html" class="text-primary font-medium inline-flex items-center">
-                        浏览论文集 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                    </a>
                 </div>
+                <a href="published.html" class="text-primary font-medium inline-flex items-center justify-center">
+                    浏览论文集 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
 
-                <!-- 功能卡片 3: 拒稿案例 -->
-                <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+            <!-- 功能卡片 3: 拒稿案例 -->
+            <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow w-72 flex flex-col justify-between">
+                <div>
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fa-solid fa-file-circle-xmark text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">被拒稿件</h3>
                     <p class="text-gray-600 mb-6">精选典型拒稿案例，帮助作者了解审稿标准。</p>
-                    <a href="rejected.html" class="text-primary font-medium inline-flex items-center">
-                        查看案例 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                    </a>
                 </div>
-                 <!-- 新增：联系我们卡片 -->
-                <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+                <a href="rejected.html" class="text-primary font-medium inline-flex items-center justify-center">
+                    查看案例 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
+
+            <!-- 功能卡片 4: 联系我们 -->
+            <div class="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow w-72 flex flex-col justify-between">
+                <div>
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fa-solid fa-phone-volume text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">联系我们</h3>
-                    <p class="text-gray-600 mb-6">公众号、邮箱等多渠道，获取最新资讯。</p>
-                    <a href="contact.html" class="text-primary font-medium inline-flex items-center">
-                        查看联系方式 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                    </a>
+                    <p class="text-gray-600 mb-6">公众号、邮箱等多渠道沟通，解答您的疑问。</p>
                 </div>
+                <a href="contact.html" class="text-primary font-medium inline-flex items-center justify-center">
+                    查看联系方式 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 页脚 -->
     <footer class="bg-secondary text-white pt-12 pb-8">
